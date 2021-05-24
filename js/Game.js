@@ -52,7 +52,7 @@ class Game {
       //index of the array
       var index =0;
 
-      //x and y position of the cars
+      //x and y position of the carss
       var x =200;
       var y;
 
@@ -61,11 +61,14 @@ class Game {
         index = index + 1 ;
 
         //position the cars a little away from each other in x direction
-        x = x + 200;
+        x = 200+(index*200)+allPlayers[plr].xPos;
         //use data form the database to display the cars in y direction
         y = displayHeight - allPlayers[plr].distance;
         cars[index-1].x = x;
         cars[index-1].y = y;
+        textAlign(CENTER);
+        textSize(20);
+        text(allPlayers[plr].name,cars[index-1].x,cars[index-1].y+75);
 
         if (index === player.index){
           cars[index - 1].shapeColor = "red";
@@ -78,15 +81,37 @@ class Game {
       }
 
     }
+   
 
     if(keyIsDown(UP_ARROW) && player.index !== null){
       player.distance +=10
       player.update();
     }
-    if(player.distance > 3860){
+    if(player.distance<2150){
+       if(keyIsDown(38) && player.index !== null)
+       {
+    if(keyIsDown(37)){
+      xVel-=0.2
+    }
+    if(keyIsDown(39)){
+      xVel+=0.2
+    }
+  }
+}else if(keyIsDown(38) && yVel>0  && player.index !== null){
+  yVel-=0.1;
+  xVel*=0.9;
+}else{
+  xVel*=0.985;
+  yVel*=0.985;
+}
+    if(player.distance > 4500){
       gameState = 2;
     }
-   
+    player.distance+=yVel;
+    yVel*=0.9;
+   player.xPos+=xVel;
+   xVel*=0.985;
+   player.update();
     drawSprites();
   }
 

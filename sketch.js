@@ -1,5 +1,5 @@
 var canvas, backgroundImage;
-
+var xVel,yVel;
 var gameState = 0;
 var playerCount;
 var allPlayers;
@@ -23,6 +23,8 @@ function preload(){
 function setup(){
   canvas = createCanvas(displayWidth , displayHeight);
   database = firebase.database();
+  xVel=0;
+  yVel=0;
   game = new Game();
   game.getState();
   game.start();
